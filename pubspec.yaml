@@ -65,6 +65,11 @@ flutter:
     - assets/image3.png
     - assets/station_list.png
     - assets/map_icon.png
+    - assets/pumpImage/stationIMG.jpg
+    - assets/pumpImage/stationIMG2.jpg
+    - assets/pumpImage/stationIMG3.png
+    - assets/pumpImage/stationIMG4.jpg
+    - assets/pumpImage/stationIMG5.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
