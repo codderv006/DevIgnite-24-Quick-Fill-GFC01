@@ -36,155 +36,158 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text('Quick Fill'),
       ),
-      body: Column(
-        children: [
-          // Image slides
-          Container(
-            height: 200,
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: Offset(1.0, 0.0), // Start from right
-                  end: Offset.zero, // End at the center
-                ).animate(
-                  CurvedAnimation(
-                    parent: AnimationController(
-                      vsync: this,
-                      duration: Duration(milliseconds: 500),
-                    )..forward(),
-                    curve: Curves.easeInOut,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            // Image slides
+            Container(
+              height: 200,
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(1.0, 0.0), // Start from right
+                    end: Offset.zero, // End at the center
+                  ).animate(
+                    CurvedAnimation(
+                      parent: AnimationController(
+                        vsync: this,
+                        duration: Duration(milliseconds: 500),
+                      )..forward(),
+                      curve: Curves.easeInOut,
+                    ),
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    _imagePaths[_currentIndex],
-                    key: ValueKey<String>(_imagePaths[_currentIndex]),
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      _imagePaths[_currentIndex],
+                      key: ValueKey<String>(_imagePaths[_currentIndex]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: 30),
-          // Section headline and subheading
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hassle-Free CNG Refill',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+            SizedBox(height: 30),
+            // Section headline and subheading
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hassle-Free CNG Refill',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Select CNG station to book a slot to refill the tank',
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          // First Card
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/map_icon.png',
-                          height: 65,
-                          width: 65,
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          'Choose from map',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                SizedBox(height: 8),
+                Text(
+                  'Select CNG station to book an available slot',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            // First Card
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3),
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Find nearby stations on the map',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/map_icon.png',
+                            height: 65,
+                            width: 65,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'Choose from map',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'Find nearby stations on the map',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          // Second Card
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/station_list.png',
-                          height: 65,
-                          width: 65,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Choose from Station lists',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+              ],
+            ),
+            SizedBox(height: 20),
+            // Second Card
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'View stations in a list format',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/station_list.png',
+                            height: 65,
+                            width: 65,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Choose from Station lists',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'View stations in a list format',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
