@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CNG Refilling App',
+      title: 'Quick Fill',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // Your theme data

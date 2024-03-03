@@ -23,7 +23,7 @@ class LandingPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'CNG Refilling App',
+              'Quick Fill',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class LandingPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Tagline here',
+              'Fatafat aao, fatafat jao',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
