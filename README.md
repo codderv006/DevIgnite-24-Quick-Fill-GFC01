@@ -1,16 +1,22 @@
-# cngline
+# Quick Fill App
 
-A new Flutter project.
+Quick Fill is a mobile application built with Flutter that simplifies the process of finding and booking CNG stations. It provides users with a hassle-free experience for locating nearby stations and booking available slots for CNG refills.
 
-## Getting Started
+## Tech Stack
 
-This project is a starting point for a Flutter application.
+- Flutter
+- Dart
+- Material Design
+- YOLO-python
 
-A few resources to get you started if this is your first Flutter project:
+## Requirements
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To run the Quick Fill app on your local machine, you need to have the following installed:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter SDK
+- Dart SDK
+- Android Studio / Xcode (for Android / iOS development environment setup)
+
+## Project built during DevIgnite hackathon organised at SIGCE, Ghansoli
+## Team- GFC
+## Team members- Vedant Pawar, Soham Tawade, Sanika Hadap
