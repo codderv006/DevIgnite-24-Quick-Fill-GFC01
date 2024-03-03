@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'registration_page.dart'; // Import RegistrationPage
 import 'homePage.dart'; // Import HomePage
+import 'ownerdashB.dart'; // Import OwnerDashboardPage
 
 class LoginPage extends StatelessWidget {
   @override
@@ -30,9 +31,8 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Perform login logic
-
-                  // Redirect to home page
+                  // Perform login logic here
+                  // For simplicity, let's redirect to HomePage.dart for any login attempt
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 child: Text('Login'),
@@ -43,6 +43,13 @@ class LoginPage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage()));
                 },
                 child: Text('New User? Register Here'),
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerDashboardPage()));
+                },
+                child: Text('Station Owner Login'),
               ),
             ],
           ),

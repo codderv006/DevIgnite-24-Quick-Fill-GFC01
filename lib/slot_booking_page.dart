@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class SlotBookingPage extends StatefulWidget {
   @override
@@ -23,6 +24,12 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
 
   String selectedHourlyInterval = '8:00 AM - 9:00 AM';
 
+  // Track whether a slot has been booked
+  bool slotBooked = false;
+
+  // Track whether early check-in is possible
+  bool earlyCheckInPossible = false;
+
   @override
   void initState() {
     super.initState();
@@ -46,19 +53,22 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
     // Generate the time slots with 10-minute intervals
     while (startHour < endHour ||
         (startHour == endHour && startMinute < endMinute)) {
-      String slotStartTime = '$startHour:${startMinute.toString().padLeft(
-          2, '0')}';
+      String slotStartTime =
+          '$startHour:${startMinute.toString().padLeft(2, '0')}';
       startMinute += 10;
       if (startMinute >= 60) {
         startHour++;
         startMinute %= 60;
       }
-      String slotEndTime = '$startHour:${startMinute.toString().padLeft(
-          2, '0')}';
+      String slotEndTime =
+          '$startHour:${startMinute.toString().padLeft(2, '0')}';
       timeSlots.add('$slotStartTime - $slotEndTime');
     }
 
-    setState(() {});
+    setState(() {
+      // Check if any slot is available for early check-in
+      earlyCheckInPossible = !slotBooked && timeSlots.isNotEmpty;
+    });
   }
 
   @override
@@ -100,22 +110,36 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
                           elevation: 5,
                           child: ListTile(
                             title: Text(timeSlots[index]),
-                            trailing: timeSlots[index].contains('Booked')
+                            trailing: slotBooked
+                                ? ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey,
+                              ),
+                              child: Text(
+                                'Booked',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                                : timeSlots[index].contains('Booked')
                                 ? ElevatedButton(
                               onPressed: () {
-                                _showCancelBookingDialog(timeSlots[index]);
+                                _showCancelBookingDialog(
+                                    timeSlots[index]);
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                               ),
                               child: Text(
-                                'Cancel Booking',
-                                style: TextStyle(color: Colors.white),
+                                'Cancel',
+                                style:
+                                TextStyle(color: Colors.white),
                               ),
                             )
                                 : ElevatedButton(
                               onPressed: () {
-                                _showConfirmationDialog(timeSlots[index]);
+                                _showConfirmationDialog(
+                                    timeSlots[index]);
                               },
                               child: Text('Book'),
                             ),
@@ -130,6 +154,32 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
           ],
         ),
       ),
+      bottomNavigationBar: earlyCheckInPossible
+          ? Card(
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Early Check-in: Available',
+                style: TextStyle(fontSize: 12),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _showEarlyCheckInConfirmationDialog();
+                },
+                child: Text(
+                  'Early Check-in',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+          : SizedBox(),
     );
   }
 
@@ -152,19 +202,17 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
                 // Implement booking functionality here
                 // For demonstration, we are just updating the UI
                 setState(() {
-                  // Find the index of the selected slot
-                  int slotIndex = timeSlots.indexOf(slot);
-                  // Update the timeSlots list to mark the slot as booked
-                  timeSlots[slotIndex] = 'Booked';
+                  // Mark the slot as booked
+                  slotBooked = true;
                 });
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red, // Background color
+                backgroundColor: Colors.red,
               ),
               child: Text(
                 'Proceed',
-                style: TextStyle(color: Colors.white), // Text color
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -191,22 +239,18 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
             ElevatedButton(
               onPressed: () {
                 // Implement cancel booking functionality here
-                // For demonstration, we are just updating the UI
                 setState(() {
-                  // Find the index of the selected slot
-                  int slotIndex = timeSlots.indexOf(slot);
-                  // Update the timeSlots list to mark the slot as available
-                  timeSlots[slotIndex] = slot.replaceAll('Booked',
-                      ''); // Replace "Booked" with the original time slot
+                  // Mark the slot as available
+                  slotBooked = false;
                 });
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red, // Background color
+                backgroundColor: Colors.red,
               ),
               child: Text(
                 'Yes, Cancel Booking',
-                style: TextStyle(color: Colors.white), // Text color
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -214,4 +258,45 @@ class _SlotBookingPageState extends State<SlotBookingPage> {
       },
     );
   }
+
+  void _showEarlyCheckInConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Early Check-in'),
+          content: Text(
+              '* Slot will be alloted only if it is available. \n*Are you sure you want to opt for early check-in? \n*Additional charges 10rs per 5 kg of CNG'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Implement early check-in functionality here
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: Text(
+                'Confirm',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SlotBookingPage(),
+  ));
 }

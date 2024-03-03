@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'mappage.dart'; // Import the MapPage
-import 'stationlist.dart'; // Import the StationListPage
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
+import 'stationlist.dart';
+import 'login_page.dart'; // Import LoginPage
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,6 +38,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text('Quick Fill'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              // Navigate to the LoginPage and remove all routes from the stack
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false,
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -97,11 +111,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigate to the MapPage
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MapPage()),
-                    );
+                    // Open the URL in the web browser
+                    _launchURL('https://sanikaahadap.github.io/map_locations/');
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -220,5 +231,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  // Function to open a URL in the default web browser
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
